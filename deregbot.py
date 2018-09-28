@@ -1,21 +1,11 @@
 #!/usr/bin/python
 import twitter
-import time
+#import time
 import csv
 from settings import *
-import datetime
-import os
+#import os
 import wget
-
-
-
-global now
-global api
-
-now = datetime.datetime.now()
-message = str(now)
-print message
-
+import random
 
 print('establish the twitter object')
 # see "Authentication" section below for tokens and keys
@@ -29,22 +19,24 @@ api = twitter.Api(consumer_key=CONSUMER_KEY,
 print('twitter object established')
 
 
-##csv_file = csv.reader(open('/storage/Watergate45/wgatetimeline.csv', 'rb'))
 csv_file = csv.reader(open('deregbot.csv', 'rb'))
-for row in csv_file:
-	print row
-	print row[0]
-	print row[1]
-	
-	
-	url = row[1]
-	wget.download(url, 'image.jpg')  
-	#photo = open('image1.jpg', 'rb')
-	# response = api.UploadMediaChunked(media=photo)
-	# print(response)
-	api.PostUpdate(status=row[0], media='image.jpg')
-	time.sleep(60)
-	os.remove("image.jpg")
+rows = list(csv_file)
+print(rows)
+print("row count")
+print(csv_file.line_num)
+rx = random.randint(0, csv_file.line_num-1)
+print rx
+print(rows[rx])
+print(rows[rx][0])
+print(rows[rx][1])
+url = rows[rx][1]
+wget.download(url, 'image.jpg')  
+	####################### photo = open('image1.jpg', 'rb')
+	####################### response = api.UploadMediaChunked(media=photo)
+	####################### print(response)
+api.PostUpdate(status=rows[rx][0], media='image.jpg')
+#time.sleep(60)
+#os.remove("image.jpg")
 	
 	
 	

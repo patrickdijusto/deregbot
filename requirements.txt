@@ -1,0 +1,2 @@
+python_twitter==3.4.2
+wget==3.2
